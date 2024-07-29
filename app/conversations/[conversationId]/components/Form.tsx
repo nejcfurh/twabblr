@@ -62,7 +62,7 @@ const Form = () => {
         />
         <button
           type="submit"
-          className="rounded-full p-2 bg-sky-500 cursor-pointer hover:bg-sky-600 transition"
+          className="rounded-full p-2 bg-gray-600 cursor-pointer hover:bg-gray-800 transition"
         >
           <HiPaperAirplane size={18} className="text-white" />
         </button>

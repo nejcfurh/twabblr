@@ -10,8 +10,8 @@ import ActiveStatus from './components/ActiveStatus';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Messenger Clone',
-  description: 'Messenger Clone Application',
+  title: 'twabblr',
+  description: 'twabblr - Messenger Clone Application',
 };
 
 export default function RootLayout({

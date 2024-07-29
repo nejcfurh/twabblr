@@ -92,8 +92,8 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="mt-8 sm: mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+    <div className="mt-6 sm:mt-8 mx-auto sm:w-full sm:max-w-md">
+      <div className="bg-white px-4 py-8 shadow rounded-lg sm:rounded-lg sm:px-10">
         {/* To get data from react-hook-form we need to wrap our onSubmit into handleSubmit from react-hook-form */}
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === 'REGISTER' && (
@@ -157,7 +157,7 @@ const AuthForm = () => {
         <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
           <div>
             {variant === 'LOGIN'
-              ? 'New to Messenger?'
+              ? 'No twabblr account?'
               : 'Already have an account?'}
           </div>
           <div onClick={toggleVariant} className="underline cursor-pointer">
