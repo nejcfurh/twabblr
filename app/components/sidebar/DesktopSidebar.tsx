@@ -6,6 +6,7 @@ import DesktopItem from './DesktopItem';
 import { User } from '@prisma/client';
 import Avatar from '../Avatar';
 import SettingsModal from './SettingsModal';
+import Image from 'next/image';
 
 interface DesktopSidebarProps {
   currentUser: User;
@@ -24,7 +25,16 @@ const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ currentUser }) => {
       />
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:w-20 xl:px-6 lg:overflow-y-auto lg:bg-white lg:border-r-[1px] lg:pb-4 lg:flex lg:flex-col justify-between">
         <nav className="mt-4 flex flex-col justify-between">
-          <ul role="list" className="flex flex-col items-center space-y-1">
+          <div className="border-b">
+            <Image
+              alt="logo"
+              src="/images/twabblrLogo.png"
+              width={50}
+              height={50}
+              className="mx-auto flex flex-col items-start mb-3"
+            />
+          </div>
+          <ul role="list" className="flex flex-col items-center space-y-1 mt-1">
             {routes.map(item => (
               <DesktopItem
                 key={item.label}
