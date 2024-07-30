@@ -14,7 +14,7 @@ export default function Home() {
           alt="logo"
           height="300"
           width="300"
-          className="mx-auto w-auto mt-[-30px] scale-75 sm:scale-100"
+          className="mx-auto w-auto mt-[-30px] scale-75 sm:scale-100 pointer-events-none"
           src="/images/twabblr.png"
         />
         <h2 className="mt-3 sm:mt-6 text-center text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
