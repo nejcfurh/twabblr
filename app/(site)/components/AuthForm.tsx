@@ -31,8 +31,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ setRegister }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     if (session?.status === 'authenticated') {
       router.push('/users');
+    } else {
+      setIsLoading(false);
     }
   }, [session?.status, router]);
 

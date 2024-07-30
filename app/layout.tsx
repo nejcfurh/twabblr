@@ -10,7 +10,7 @@ import ActiveStatus from './components/ActiveStatus';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'twabblr',
+  title: 'twabblr | Chat anywhere!',
   description: 'twabblr - Messenger Clone Application',
 };
 
