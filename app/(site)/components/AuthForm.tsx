@@ -2,18 +2,29 @@
 
 import Button from '@/app/components/Button';
 import Input from '@/app/components/inputs/Input';
-import { useCallback, useEffect, useState } from 'react';
-import { FieldValues, SubmitHandler, set, useForm } from 'react-hook-form';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import AuthSocialButton from './AuthSocialButton';
 import { BsFacebook, BsGithub, BsGoogle } from 'react-icons/bs';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import LoadingModal from '@/app/components/LoadingModal';
 
 type Variant = 'LOGIN' | 'REGISTER';
 
-const AuthForm = () => {
+interface AuthFormProps {
+  setRegister: Dispatch<SetStateAction<boolean>>;
+}
+
+const AuthForm: React.FC<AuthFormProps> = ({ setRegister }) => {
   const session = useSession();
   const router = useRouter();
   const [variant, setVariant] = useState<Variant>('LOGIN');
@@ -28,10 +39,12 @@ const AuthForm = () => {
   const toggleVariant = useCallback(() => {
     if (variant === 'LOGIN') {
       setVariant('REGISTER');
+      setRegister(true);
     } else {
       setVariant('LOGIN');
+      setRegister(false);
     }
-  }, [variant]);
+  }, [variant, setRegister]);
 
   const {
     register,
@@ -45,7 +58,7 @@ const AuthForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     setIsLoading(true);
 
     if (variant === 'REGISTER') {
@@ -92,80 +105,86 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="mt-6 sm:mt-8 mx-auto sm:w-full sm:max-w-md">
-      <div className="bg-white px-4 py-8 shadow rounded-lg sm:rounded-lg sm:px-10">
-        {/* To get data from react-hook-form we need to wrap our onSubmit into handleSubmit from react-hook-form */}
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {variant === 'REGISTER' && (
+    <>
+      {isLoading ? <LoadingModal /> : null}
+      <div className="mt-6 sm:mt-8 mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white px-4 py-8 shadow rounded-lg sm:rounded-lg sm:px-10">
+          {/* To get data from react-hook-form we need to wrap our onSubmit into handleSubmit from react-hook-form */}
+          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            {variant === 'REGISTER' && (
+              <Input
+                label="Name"
+                register={register}
+                id="name"
+                errors={errors}
+                disabled={isLoading}
+              />
+            )}
             <Input
-              label="Name"
+              label="Email"
               register={register}
-              id="name"
+              id="email"
               errors={errors}
+              type="email"
               disabled={isLoading}
             />
-          )}
-          <Input
-            label="Email"
-            register={register}
-            id="email"
-            errors={errors}
-            type="email"
-            disabled={isLoading}
-          />
-          <Input
-            label="Password"
-            register={register}
-            id="password"
-            errors={errors}
-            type="password"
-            disabled={isLoading}
-          />
-          <div>
-            <Button disabled={isLoading} fullWidth type="submit">
-              {variant === 'LOGIN' ? 'Sign in' : 'Register'}
-            </Button>
-          </div>
-        </form>
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
+            <Input
+              label="Password"
+              register={register}
+              id="password"
+              errors={errors}
+              type="password"
+              disabled={isLoading}
+            />
+            <div>
+              <Button disabled={isLoading} fullWidth type="submit">
+                {variant === 'LOGIN' ? 'Sign in' : 'Register'}
+              </Button>
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">
-                or continue with
-              </span>
+          </form>
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="bg-white px-2 text-gray-500">
+                  or continue with
+                </span>
+              </div>
             </div>
-          </div>
 
-          <div className="mt-6 flex gap-2">
-            <AuthSocialButton
-              icon={BsGithub}
-              onClick={() => socialAction('github')}
-            />
-            <AuthSocialButton
-              icon={BsGoogle}
-              onClick={() => socialAction('google')}
-            />
-            <AuthSocialButton
-              icon={BsFacebook}
-              onClick={() => socialAction('facebook')}
-            />
+            <div className="mt-6 flex gap-2">
+              <AuthSocialButton
+                icon={BsGithub}
+                onClick={() => socialAction('github')}
+              />
+              <AuthSocialButton
+                icon={BsGoogle}
+                onClick={() => socialAction('google')}
+              />
+              <AuthSocialButton
+                icon={BsFacebook}
+                onClick={() => socialAction('facebook')}
+              />
+            </div>
           </div>
-        </div>
-        <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
-          <div>
-            {variant === 'LOGIN'
-              ? 'No twabblr account?'
-              : 'Already have an account?'}
-          </div>
-          <div onClick={toggleVariant} className="underline cursor-pointer">
-            {variant === 'LOGIN' ? 'Create an account!' : 'Login!'}
+          <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
+            <div>
+              {variant === 'LOGIN'
+                ? 'No twabblr account?'
+                : 'Already have an account?'}
+            </div>
+            <div
+              onClick={toggleVariant}
+              className="underline font-medium cursor-pointer text-gray-600"
+            >
+              {variant === 'LOGIN' ? 'Create it!' : 'Sign in!'}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

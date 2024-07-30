@@ -1,7 +1,12 @@
+'use client';
+
 import Image from 'next/image';
 import AuthForm from './components/AuthForm';
+import { useState } from 'react';
 
 export default function Home() {
+  const [register, setRegister] = useState(false);
+
   return (
     <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-100">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -13,10 +18,10 @@ export default function Home() {
           src="/images/twabblr.png"
         />
         <h2 className="mt-3 sm:mt-6 text-center text-xl sm:text-2xl font-semibold tracking-tight text-gray-900">
-          Sign in to your account!
+          {register ? 'Register your account!' : 'Sign in to your account!'}
         </h2>
       </div>
-      <AuthForm />
+      <AuthForm setRegister={setRegister} />
     </div>
   );
 }
