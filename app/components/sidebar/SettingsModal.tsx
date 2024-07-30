@@ -91,6 +91,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                     width="48"
                     height="48"
                     className="rounded-full"
+                    style={{ clipPath: 'circle()' }}
                     src={
                       image || currentUser?.image || '/images/placeholder.jpg'
                     }
