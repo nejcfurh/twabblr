@@ -39,9 +39,14 @@ export async function POST(request: Request) {
         },
       });
 
-      newConversation.users.forEach(user => {
+      //async-pusher
+      newConversation.users.forEach(async user => {
         if (user.email) {
-          pusherServer.trigger(user.email, 'conversation:new', newConversation);
+          await pusherServer.trigger(
+            user.email,
+            'conversation:new',
+            newConversation
+          );
         }
       });
 
@@ -89,10 +94,14 @@ export async function POST(request: Request) {
         users: true,
       },
     });
-
-    newConversation.users.forEach(user => {
+    //pusher-async
+    newConversation.users.forEach(async user => {
       if (user.email) {
-        pusherServer.trigger(user.email, 'conversation:new', newConversation);
+        await pusherServer.trigger(
+          user.email,
+          'conversation:new',
+          newConversation
+        );
       }
     });
 

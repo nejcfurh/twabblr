@@ -8,6 +8,7 @@ import { pusherClient } from '../libs/pusher';
 const useActiveChannel = () => {
   const { set, add, remove } = useActiveList();
   const [activeChannel, setActiveChannel] = useState<Channel | null>(null);
+
   useEffect(() => {
     let channel = activeChannel;
 
