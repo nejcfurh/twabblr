@@ -67,13 +67,20 @@ export async function POST(request: Request) {
     const lastMessage =
       updatedConversation.messages[updatedConversation.messages.length - 1];
 
-    //pusher-async
-    updatedConversation.users.map(async user => {
+    // //pusher-async
+    // updatedConversation.users.map(async user => {
+    //   await pusherServer.trigger(user.email!, 'conversation:update', {
+    //     id: conversationId,
+    //     messages: [lastMessage],
+    //   });
+    // });
+
+    for (const user of updatedConversation.users) {
       await pusherServer.trigger(user.email!, 'conversation:update', {
         id: conversationId,
         messages: [lastMessage],
       });
-    });
+    }
 
     return NextResponse.json(newMessage);
   } catch (error: any) {

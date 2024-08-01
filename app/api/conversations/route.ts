@@ -94,6 +94,7 @@ export async function POST(request: Request) {
         users: true,
       },
     });
+
     //pusher-async
     newConversation.users.forEach(async user => {
       if (user.email) {
