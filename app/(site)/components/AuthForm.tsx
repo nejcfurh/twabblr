@@ -33,7 +33,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ setRegister }) => {
   useEffect(() => {
     setIsLoading(true);
     if (session?.status === 'authenticated') {
-      router.push('/users');
+      router.push('/conversations');
     } else {
       setIsLoading(false);
     }
