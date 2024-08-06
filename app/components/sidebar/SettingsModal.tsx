@@ -47,7 +47,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     });
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     setIsLoading(true);
     axios
       .post('/api/settings', data)
