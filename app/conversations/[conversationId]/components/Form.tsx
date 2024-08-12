@@ -19,7 +19,7 @@ const Form = () => {
     defaultValues: { message: '' },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = (data: any) => {
     //clear values from the form
     setValue('message', '', { shouldValidate: true });
     axios.post('/api/messages', {
